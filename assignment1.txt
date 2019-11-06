@@ -1,8 +1,8 @@
 2. Find a image from dockerhub of your choice(recommeded: nginx), don't use browser, pull the official image from dockerhub
--->docker pull nginx
+				:-docker pull nginx
 
 3. List all the available images in your machine/vm, make sure you see recently pulled image in the list.
--->docker images
+				:-docker images
 o/p:-
 REPOSITORY                                            TAG                 IMAGE ID            CREATED             SIZE
 nginx                                                 latest              540a289bab6c        12 days ago         126MB
@@ -10,11 +10,11 @@ k8s.gcr.io/kube-proxy                                 v1.14.5             468c6b
 k8s.gcr.io/kube-apiserver                             v1.14.5             3129b0ba0920        3 months ago        210MB
 
 4. Find out the "Full" ImageId of the image that you pulled and write it below.
--->docker inspect nginx
+				:-docker inspect nginx
  o/p :- "Id": "sha256:540a289bab6cb1bf880086a9b803cf0c4cefe38cbb5cdefa199b69614525199f",
 
 5. Create a container of your image 
--->docker create nginx
+				:-docker create nginx
 o/p:-3c6f61bbba96a53f7329810d5813a75e563d26f0b39b3311186cefe20ec4000d
 
 6. List all the running containers
@@ -26,7 +26,7 @@ f301dd521a3e        1f394ae9e226           "/home/weave/launch.…"   24 minutes a
 
 
 7. List all the running and stopped containers
--->docker container ps -a
+				:-docker container ps -a
 o/p:-
 CONTAINER ID        IMAGE                  COMMAND                  CREATED              STATUS                      PORTS           NAMES
 3c6f61bbba96        nginx                  "nginx -g 'daemon of…"   About a minute ago   Created           nostalgic_davinci
@@ -38,7 +38,7 @@ c8751f705fbb        1f394ae9e226           "/home/weave/launch.…"   22 minutes a
 
 
 8. Find out the "Full" containerId of the container and write it below.
--->docker inspect 3c6f61bbba96
+				:-docker inspect 3c6f61bbba96
 o/p:-
 "Id": "b5eae3edce3e35a286accf8006d062ddbca3cbea28e0119b36f66f1c341508a5"
 
@@ -47,12 +47,12 @@ o/p:-
 docker ps
 get the container id
 
-docker ps -q --no-trunc | grep b5eae3edce3e
+				:-docker ps -q --no-trunc | grep b5eae3edce3e
 b5eae3edce3e35a286accf8006d062ddbca3cbea28e0119b36f66f1c341508a5
 
 
 9. Find out how many image layers are used to build this image.
--->docker image inspect nginx -f '{{.RootFS.Layers}}'
+				:-docker image inspect nginx -f '{{.RootFS.Layers}}'
 o/p:-
 
 [sha256:b67d19e65ef653823ed62a5835399c610a40e8205c16f839c5cc567954fcf594 
@@ -60,7 +60,7 @@ sha256:6eaad811af0237b78ba8b44a282d1564259d90007d628a032c5df7e3e2bbb613 sha256:a
 
 (or)
 
--->docker inspect nginx
+				:-docker inspect nginx
 o/p:-
 "RootFS": {
             "Type": "layers",
@@ -72,7 +72,8 @@ o/p:-
         } 
 
 10. Get the Apache Tomcat 7 server image from the docker hub.
--->docker pull tomcat:7
+				:-docker pull tomcat:7
+
 o/p:-
 7: Pulling from library/tomcat
 9a0b0ce99936: Pull complete
@@ -90,18 +91,19 @@ Status: Downloaded newer image for tomcat:7
 
 
 11. Run the Apache Tomcat 7, I mean create a container of Apache Tomcat.
--->docker run -d -p 8080:8080 tomcat:7
+				:-docker run -d -p 8080:8080 tomcat:7
 o/p:-
 b223a674af58f7da09556b22bc2a1f868bbfd3a79d478767dda9b937f829c13b
 
 
 12. Find out what is the IP Address of the Apache Tomcat Container that it is running on
-docker inspect b223a674af
+				:-docker inspect b223a674af
 o/p:-
 IPAddress": "172.18.0.2",
 
 13. Which Port it is using?
--->docker inspect b223a674af
+				:-docker inspect b223a674af
+
 o/p:-
 "Ports": {
                 "8080/tcp": [
@@ -114,17 +116,17 @@ o/p:-
 
 
 14. Try to access the Tomcat's home page from your machine/vm.
--->curl 172.18.0.2:8080
+				:-curl 172.18.0.2:8080
 
 15. What is the disk size of Apache Tomcat image?
--->docker images tomcat
+				:-docker images tomcat
 o/p:-
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 tomcat              7                   e3a393545a10        2 weeks ago         506MB
 
 
 16. Find out list of all environment variables that is configured for tomcat image, can you see JAVA_HOME and CATALINA_HOME? What did you notice about it?
--->docker inspect tomcat:7
+:-				:-docker inspect tomcat:7
 o/p:-
 "Env": [
                 "PATH=/usr/local/tomcat/bin:/usr/local/openjdk-8/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
@@ -144,7 +146,7 @@ o/p:-
             
 
 17. Find out which port is exposed for tomcat?
--->docker inspect tomcat:7
+				:-docker inspect tomcat:7
 o/p:-
 "ExposedPorts": {
                 "8080/tcp": {}
@@ -157,7 +159,7 @@ o/p:-
 
 
 19. Pull ubuntu os from dockerhub, try to pull 2 images of ubuntu, Except the latest one.
--->1)docker pull ubuntu:18.04
+				1)docker pull ubuntu:18.04
 o/p:-
 18.04: Pulling from library/ubuntu
 7ddbc47eeb70: Pull complete
@@ -167,7 +169,7 @@ c1bbdc448b72: Pull complete
 Digest: sha256:6e9f67fa63b0323e9a1e587fd71c561ba48a034504fb804fd26fd8800039835d
 Status: Downloaded newer image for ubuntu:18.04
 
-2)docker pull ubuntu:14.04
+				2)docker pull ubuntu:14.04
 o/p:-
 14.04: Pulling from library/ubuntu
 a7344f52cb74: Pull complete
@@ -178,8 +180,8 @@ Digest: sha256:2f7c79927b346e436cc14c92bd4e5bd778c3bd7037f35bc639ac1589a7acfa90
 Status: Downloaded newer image for ubuntu:14.04
 
 20. Run the container of ubuntu in attached mode.
-1)docker run -d --name topdemo ubuntu /usr/bin/top -b
-2)docker attach topdemo
+				1)docker run -d --name topdemo ubuntu /usr/bin/top -b
+				2)docker attach topdemo
 o/p:-
 top - 10:54:06 up 23 min,  0 users,  load average: 1.00, 1.24, 0.83
 Tasks:   1 total,   1 running,   0 sleeping,   0 stopped,   0 zombie
@@ -198,13 +200,13 @@ KiB Swap:        0 total,        0 free,        0 used.  1266400 avail Mem
 
 
 21. Run the container of another ubuntu in detached mode.
--->docker run --name testmode -d -it ubuntu
+				:-docker run --name testmode -d -it ubuntu
 
 22. Check how many ubuntu containers are running and stopped
--->docker ps -a | grep ubuntu
+				:-docker ps -a | grep ubuntu
 
 23. Is the tomcat container running? If no, start one.
-docker start 037ac81308da
+				:-docker start 037ac81308da
 
 24. Check the logs, generated by tomcat container(don't forget to make request to tomcat's home page to see the log).
 
@@ -221,10 +223,105 @@ docker start 037ac81308da
 			 	:-touch testmode
 	
 28. Install software of your choice in ubuntu container using "apt-get install"
-				:-apt-get -y install nginx
+                                :-apt-get update 
+				:-apt-get install git
 
 29. Now exit the ubuntu shell, are you back to your host machine, if not, come back to the host machine.
 				:-exit
 
 30. Check if the ubuntu container is running.
 				:-docker ps -a | grep ubuntu
+31. Create a new ubuntu container out of the same image as that previous container in attached mode.
+				:-docker run -d --name topdemo2 ubuntu /usr/bin/top -b
+				:-docker attach testmode2
+32. Login as a root user
+				:-docker exec -it d75e65a66d2a /bin/bash 
+                                :-default user is root user
+33. Check if you can see the file created in previous container, you will not see the file as well as software that you installed in the previous container. Now kill this Container.
+				:-ls -la
+				:-docker ps -a | grep ubuntu
+d75e65a66d2a        ubuntu                 "/usr/bin/top -b"        19 minutes ago      Up 17 minutes             topdemo2
+c8729195a66a        ubuntu                 "/bin/bash"              31 minutes ago      Up 8 seconds             testmode
+
+				:-docker container kill c8729195a66a
+c8729195a66a
+master $ docker ps -a | grep ubuntu
+d75e65a66d2a        ubuntu                 "/usr/bin/top -b"        24 minutes ago      Exited (137) 16 seconds ago             topdemo2
+c8729195a66a        ubuntu                 "/bin/bash"              36 minutes ago      Up 40 seconds             testmode
+
+34. Do you have the previous ubuntu container where you created the file and installed the software? If no reapeat step 25 to 29.
+				:-yes, i have previous container
+35. Create an Image out of the existing container.
+				:-docker commit c8729195a66a svendowideit/testimage:version3
+				:-sha256:9b58eb63c6211b02161724ce675dceee759c829da2eeb01daf3e2c88bd5d392a
+
+				:-master $ docker images
+
+REPOSITORY                                            TAG                 IMAGE ID            CREATED             SIZE
+svendowideit/testimage                                version3            9b58eb63c621        19 seconds ago      186MB
+	
+36. Now Create a Container out of this image and login into it to see if you can see the file and software installed by you in the previous container.
+				:-docker create 9b58eb63c621(IMAGE ID)
+				:-d3f0c5ea6243cea14747de49c1ab6809b94b550e89c450c67c802ed3d005ea01(new container id)
+				:-docker exec -it d3f0c5ea6243 /bin/bash
+   				:-ls -la
+				:-git --version
+				:-yes i can see
+
+37. Do you have running tomcat container? If yes, Stop it and kill all tomcat container.
+				:-docker kill f604369ea0e4
+38. Create an index.html file with following code in it:-
+	<h1>This is Tomcat Container</h1>
+Now, Start a tomcat container in such a way that on hitting its URL for home page it should show the above html page.
+39. type below command:-
+	docker images --help
+Now, try to run command that proves the concept of following three options:-
+1. -a
+2. -f
+3. -q
+
+write atleast 1 command using each option above and prove their concepts as described in the --help.
+
+master $ docker ps -f
+
+master $ docker images -a(it will show all the images)
+
+REPOSITORY                                            TAG                 IMAGE ID            CREATED             SIZE
+
+testimage                                             version3            a16599608eb4        27 minutes ago      186MB
+
+ubuntu                                                latest              775349758637        4 days ago          64.2MB
+
+tomcat                                                7.0                 e3a393545a10        2 weeks ago         506MB
+
+2. docker images -f:Filter output based on conditions provided:
+
+dangling=boolean,true/false
+
+ 
+
+docker images -f "dangling=true"
+
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+
+ubuntu              <none>              3556258649b2        3 months ago        64.2MB
+
+ 
+
+3. docker images -q: Only show numeric IDs
+
+a16599608eb4
+
+775349758637
+
+e3a393545a10
+
+40. type below command:-
+	docker ps --help
+Now, try to run command that proves the concept of following six options:-
+1. -a
+2. -f
+3. -q
+4. -n
+5. -l
+6. -s
