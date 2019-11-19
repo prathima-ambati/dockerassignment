@@ -23,30 +23,31 @@ Here is some background information on the three services:
 
 Step 1
 vi produce.yml
-# creating the stack file
 version: '3'
-services: 
- fruit: 
+services:
+ fruit:
   image: linuxacademycontent/fruit-service:1.0.1
   ports:
-   - 8071:80
+   - 8082:80
   environment:
-   - FRUIT_HOST=http://localhost
-   - FRUIT_PORT=8071
+   - FRUIT_HOST=172.31.43.168
+   - FRUIT_PORT=8082
  vegetable:
   image: linuxacademycontent/vegetable-service:1.0.0
   ports:
-   - 8072:80
+   - 8081:80
   environment:
-   - VEGETABLE_HOST=http://localhost
-   - VEGETABLE_PORT=8072
+   - VEGETABLE_HOST=172.31.43.168
+   - VEGETABLE_PORT=8081
  allproduct:
   image: linuxacademycontent/all-products:1.0.0
   ports:
-   - 8070:80
+   - 8080:80
   environment:
-   - VEGETABLE_HOST=http://localhost
-   - VEGETABLE_PORT=8070 
+   - VEGETABLE_HOST=172.31.43.168
+   - VEGETABLE_PORT=8081
+   - FRUIT_HOST=172.31.43.168
+   - FRUIT_PORT=8082
    
 Deploy a Docker application stack that meets the following specifications:
 1. The stack is called produce.
@@ -57,25 +58,29 @@ docker stack deploy -c produce.yml  produce
 4. The All Products service is published on port 8080.
 
 root@ip-172-31-43-168:/home/ubuntu# docker service ls
-ID                  NAME                   MODE                REPLICAS            IMAGE                                         PORTS
-tz5sdxi3hgl6        produce_allproduct     replicated          1/1                 linuxacademycontent/all-products:1.0.0        *:8070->80/tcp
-p9gbhfg93g73        produce_fruit          replicated          1/1                 linuxacademycontent/fruit-service:1.0.1       *:8071->80/tcp
-9nr7v94br1oe        produce_vegetable      replicated          1/1                 linuxacademycontent/vegetable-service:1.0.0   *:8072->80/tcp
+ID                  NAME                 MODE                REPLICAS            IMAGE                                         PORTS
+vgc852zd2kys        produce_allproduct   replicated          1/1                 linuxacademycontent/all-products:1.0.0        *:8080->80/tcp
+mxj6pazic7ji        produce_fruit        replicated          1/1                 linuxacademycontent/fruit-service:1.0.1       *:8082->80/tcp
+uxa07xx55gj2        produce_vegetable    replicated          1/1                 linuxacademycontent/vegetable-service:1.0.0   *:8081->80/tcp
+
 
 
 One you have deployed the stack, you can verify whether it is working by querying the All Products service:
-curl localhost:8072 -->showing vegitables list
-curl localhost:8071 -->showing fruits list
+curl localhost:8081 -->showing vegitables list
+curl localhost:8082 -->showing fruits list
 
 
-curl localhost:8070
+curl localhost:8080
 
-ERROR:- getting bellow error
-curl: (52) Empty reply from server in docker
-
+root@ip-172-31-43-168:/home/ubuntu# curl localhost:8080
+{"description":"A list of all produce.","products":["acorn squash","alfalfa sprout","amaranth","anise","apple","apricot","artichoke","arugula","asparagus","aubergine","avocado","azuki bean","banana","banana squash","basil","bean sprout","beet","bell pepper","bilberry","black bean","black-eyed pea","blackberry","blackcurrant","blood orange","blueberry","bok choy","borlotti bean","boysenberry","breadfruit","broad beans","broccoflower","broccoli","brussels sprout","butternut squash","cabbage","calabrese","canary melon","cantaloupe","caraway","carrot","cauliflower","cayenne pepper","celeriac","celery","chamomile","chard","chayote","cherimoya","cherry","chickpea","chili pepper","chives","cilantro","clementine","cloudberry","coconut","collard green","corn","corn salad","courgette","cranberry","cucumber","cucumber","currant","daikon","damson","date","delicata","dill","dragonfruit","durian","eggplant","eggplant","elderberry","endive","feijoa","fennel","fiddlehead","fig","frisee","garlic","gem squash","ginger","goji berry","gooseberry","grape","grapefruit","green bean","green pepper","guava","habanero","herbs and spice","honeydew","horseradish","hubbard squash","huckleberry","jackfruit","jalapeno","jambul","jerusalem artichoke","jicama","jujube","kale","kidney bean","kiwi fruit","kohlrabi","kumquat","lavender","leek ","legume","lemon","lemon grass","lentils","lettuce","lima bean","lime","loquat","lychee","mamey","mandarine","mangetout","mango","marjoram","mulberry","mung bean","mushroom","mustard green","navy bean","nectarine","new zealand spinach","nopale","nut","okra","olive","onion","orange","oregano","pamelo","papaya","paprika","parsley","parsnip","passionfruit","patty pan","pea","peach","pear","persimmon","physalis","pineapple","pinto bean","plum","pomegranate","pomelo","potato","pumpkin","purple mangosteen","quince","radicchio","radish","raisin","rambutan","raspberry","redcurrant","rhubarb","rock melon","rosemary","runner bean","rutabaga","sage","salal berry","satsuma","scallion","shallot","skirret","snap pea","soy bean","spaghetti squash","spinach","squash ","star fruit","strawberry","sweet potato","tabasco pepper","tamarillo","tangerine","taro","tat soi","thyme","tomato","topinambur","tubers","turnip","ugli fruit","wasabi","water chestnut","watercress","watermelon","white radish","yam","zucchini"]}
 If the stack is set up correctly, you should get a combined list of fruits and vegetables.
 
 Step 2
 Once you have deployed the stack and verified that it is working, modify the stack by scaling both the Fruit and Vegetable services up to 3 replicas.
+
+docker service scale produce_fruit=3
+docker service scale produce_vegetable=3
+
 
 Good luck!
